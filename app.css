@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css?family=Sarabun&display=swap');
+
+#root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    359.42deg,
+    #ffd464 3.64%,
+    rgba(255, 230, 7, 0.61) 53.92%
+  );
+}
+
+#buttonsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 163px;
+  height: 200px;
+}
+
+/* Remove default button styles */
+button {
+  display: inline-block;
+  border: none;
+  padding: 1rem 2rem;
+  margin: 0;
+  text-decoration: none;
+  background: #faf8f6;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  font-family: 'Sarabun', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  text-align: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}

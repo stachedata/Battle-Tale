@@ -3,8 +3,36 @@ import ReactDOM from 'react-dom'
 import './app.css'
 
 class Join extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { value: 'Code' }
+
+    this.handleChange = this.handleChange.bind(this)
+    this.joinGame = this.joinGame.bind(this)
+  }
+
+  handleChange(event) {
+    if (event.target.value.length < 6)
+      this.setState({ value: event.target.value })
+  }
+
+  joinGame(event) {
+    alert('Code: ' + this.state.value)
+    event.preventDefault()
+  }
+
   render() {
-    return <h1>Hello Join</h1>
+    return (
+      <form onSubmit={this.joinGame}>
+        <input
+          type="number"
+          placeholder="Code"
+          value={this.state.value}
+          onChange={this.handleChange}
+        />
+        <input type="submit" value="Join" />
+      </form>
+    )
   }
 }
 

@@ -19,8 +19,22 @@
   height: 200px;
 }
 
-/* Remove default button styles */
-button {
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form input[type='number'] {
+  margin-bottom: 50px;
+  width: 180px;
+  height: 70px;
+  text-align: center;
+  font-size: 2.5em;
+  letter-spacing: 0.1em;
+}
+/* Removes default button styles */
+button,
+form input[type='submit'] {
   display: inline-block;
   border: none;
   padding: 1rem 2rem;
@@ -36,4 +50,11 @@ button {
   text-align: center;
   -webkit-appearance: none;
   -moz-appearance: none;
+}
+
+/* Removes number input spinner */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

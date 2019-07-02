@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './app.css'
+import io from 'socket.io-client'
 
 class Join extends React.Component {
   constructor(props) {
@@ -38,6 +39,8 @@ class Join extends React.Component {
 
 class Host extends React.Component {
   render() {
+    let socket = io.connect('http://localhost:8000')
+
     return <h1>Hello Host</h1>
   }
 }

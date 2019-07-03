@@ -18,7 +18,7 @@
   width: 163px;
   height: 200px;
 }
-
+/* Join Screen */
 form {
   display: flex;
   flex-direction: column;
@@ -32,6 +32,39 @@ form input[type='number'] {
   font-size: 2.5em;
   letter-spacing: 0.1em;
 }
+/* Host Screen */
+#hostScreen {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#roomNumber {
+  margin: 0;
+  font-family: Sarabun;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 30px;
+  line-height: 39px;
+  text-align: center;
+  letter-spacing: 0.05em;
+
+  color: #272727;
+}
+.teams {
+  background: rgba(196, 196, 196, 0.3);
+  border-radius: 5px;
+}
+#judge {
+  width: 333px;
+  height: 88px;
+}
+#team1,
+#team2 {
+  width: 333px;
+  height: 200px;
+}
+
 /* Removes default button styles */
 button,
 form input[type='submit'] {

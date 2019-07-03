@@ -41,7 +41,15 @@ class Host extends React.Component {
   render() {
     let socket = io.connect('http://localhost:8000')
 
-    return <h1>Hello Host</h1>
+    return (
+      <div id="hostScreen">
+        <h1 id="roomNumber">Room #</h1>
+        <div id="judge" class="teams" />
+        <div id="team1" class="teams" />
+        <div id="team2" class="teams" />
+        <button>Ready</button>
+      </div>
+    )
   }
 }
 

@@ -44,9 +44,15 @@ class Host extends React.Component {
     return (
       <div id="hostScreen">
         <h1 id="roomNumber">Room #</h1>
-        <div id="judge" class="teams" />
-        <div id="team1" class="teams" />
-        <div id="team2" class="teams" />
+        <div id="judge" class="teams">
+          <p class="teamTitle">Judge</p>
+        </div>
+        <div id="team1" class="teams">
+          <p class="teamTitle">Team 1</p>
+        </div>
+        <div id="team2" class="teams">
+          <p class="teamTitle">Team 2</p>
+        </div>
         <button>Ready</button>
       </div>
     )

@@ -6,6 +6,13 @@ app.get('/', (req, res) => {
   res.send('Test')
 })
 
+users = []
+
+createUser = name => {
+  users.push({ name: name, role: '' })
+  console.log(users)
+}
+
 io.on('connection', socket => {
   console.log('Host connected:', socket.id)
   socket.on('disconnect', () => {
@@ -15,11 +22,9 @@ io.on('connection', socket => {
   socket.on('hostRoom', roomNum => {
     console.log('hosted')
     const nsp = io.of('/' + roomNum)
-    nsp.on('connection', () => {
-      console.log('user joined nsp')
-      console.log('name:', nsp.name)
+    nsp.on('connection', room => {
       console.log('connected:', Object.keys(nsp.connected))
-      console.log('ids', nsp.ids)
+      room.on('createUser', name => createUser(name))
     })
   })
 })

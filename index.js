@@ -41,7 +41,10 @@ class Join extends React.Component {
 class Host extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { socket: null }
+    this.state = {
+      socket: null,
+      username: ''
+    }
   }
 
   componentDidMount() {
@@ -49,8 +52,13 @@ class Host extends React.Component {
       this.setState({
         socket: io.connect('http://localhost:8000/' + this.props.roomNumber)
       })
+      this.setState({ username: prompt('Name: ') })
     }),
       1000
+  }
+
+  componentDidUpdate() {
+    this.state.socket.emit('createUser', this.state.username)
   }
 
   render() {

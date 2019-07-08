@@ -18,7 +18,8 @@ class Join extends React.Component {
   }
 
   joinGame(event) {
-    alert('Code: ' + this.state.value)
+    // alert('Code: ' + this.state.value)
+    io.connect('http://localhost:8000/' + this.state.value)
     event.preventDefault()
   }
 
@@ -38,20 +39,32 @@ class Join extends React.Component {
 }
 
 class Host extends React.Component {
-  render() {
-    let socket = io.connect('http://localhost:8000')
+  constructor(props) {
+    super(props)
+    this.state = { socket: null }
+  }
 
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        socket: io.connect('http://localhost:8000/' + this.props.roomNumber)
+      })
+    }),
+      1000
+  }
+
+  render() {
     return (
       <div id="hostScreen">
-        <h1 id="roomNumber">Room #</h1>
-        <div id="judge" class="teams">
-          <p class="teamTitle">Judge</p>
+        <h1 id="roomNumber">Room #{this.props.roomNumber}</h1>
+        <div id="judge" className="teams">
+          <p className="teamTitle">Judge</p>
         </div>
-        <div id="team1" class="teams">
-          <p class="teamTitle">Team 1</p>
+        <div id="team1" className="teams">
+          <p className="teamTitle">Team 1</p>
         </div>
-        <div id="team2" class="teams">
-          <p class="teamTitle">Team 2</p>
+        <div id="team2" className="teams">
+          <p className="teamTitle">Team 2</p>
         </div>
         <button>Ready</button>
       </div>
@@ -65,7 +78,10 @@ class App extends React.Component {
   }
 
   clickHost() {
-    ReactDOM.render(<Host />, document.getElementById('root'))
+    const num = Math.floor(10000 + Math.random() * 90000)
+    const socket = io.connect('http://localhost:8000')
+    socket.emit('hostRoom', num)
+    ReactDOM.render(<Host roomNumber={num} />, document.getElementById('root'))
   }
 
   render() {

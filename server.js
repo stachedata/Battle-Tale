@@ -2,30 +2,21 @@ let app = require('express')()
 let http = require('http').createServer(app)
 let io = require('socket.io')(http)
 
-app.get('/', (req, res) => {
-  res.send('Test')
-})
-
-users = []
-
-createUser = name => {
-  users.push({ name: name, role: '' })
-  console.log(users)
-}
-
 io.on('connection', socket => {
-  console.log('Host connected:', socket.id)
-  socket.on('disconnect', () => {
-    console.log('Host disconnected:', socket.id)
-  })
+  socket.on('createRoom', rsp => {
+    const roomNumber = Math.floor(10000 + Math.random() * 90000)
+    const room = io.of('/' + roomNumber)
+    let users = {}
 
-  socket.on('hostRoom', roomNum => {
-    console.log('hosted')
-    const nsp = io.of('/' + roomNum)
-    nsp.on('connection', room => {
-      console.log('connected:', Object.keys(nsp.connected))
-      room.on('createUser', name => createUser(name))
+    room.on('connection', user => {
+      user.on('join', (name, rsp) => {
+        users[user.id] = name
+        rsp(users)
+      })
     })
+    io.of(room.name).emit('updateUserList', users)
+
+    rsp(roomNumber)
   })
 })
 http.listen(8000)

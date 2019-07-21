@@ -6,11 +6,17 @@ io.on('connection', socket => {
   socket.on('createRoom', rsp => {
     const roomNumber = Math.floor(10000 + Math.random() * 90000)
     const room = io.of('/' + roomNumber)
-    let users = {}
+    let users = []
 
     room.on('connection', user => {
       user.on('join', (name, rsp) => {
-        users[user.id] = name
+        let u = {}
+        u[user.id] = name
+        users.push(u)
+        console.log(users)
+        rsp(users)
+      })
+      user.on('users', rsp => {
         rsp(users)
       })
     })

@@ -76,8 +76,7 @@ form input[type='number'] {
 #judge {
   height: 88px;
 }
-#team1,
-#team2 {
+#team {
   height: 200px;
 }
 

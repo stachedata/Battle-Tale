@@ -1,6 +1,10 @@
 import React from 'react'
 
 class Judge extends React.Component {
+  componentDidUpdate() {
+    console.log('Judge:', this.props.player)
+  }
+
   render() {
     return (
       <div id="judge" className="teams">
@@ -13,10 +17,10 @@ class Judge extends React.Component {
 
 class Team extends React.Component {
   componentDidMount() {
-    console.log('mount: ', this.props.players)
+    console.log('Team mount: ', this.props.players)
   }
   componentDidUpdate() {
-    console.log('update: ', this.props.players)
+    console.log('Team update: ', this.props.players)
   }
 
   render() {
@@ -38,8 +42,8 @@ class Lobby extends React.Component {
 
     this.team = {
       counter: 1,
-      a: [''],
-      b: [''],
+      a: [],
+      b: [],
     }
   }
 
@@ -48,19 +52,25 @@ class Lobby extends React.Component {
     this.props.room.emit('join', name, rsp => {
       this.setState({ players: rsp })
     })
-    // TODO fix this up
-    // this.updater = setInterval(() => {
-    //   this.props.room.emit('users', rspo => this.setState({ players: rspo }))
-    // }, 1000)
+    this.interval = setInterval(() => {
+      this.props.room.emit('users', rspo => this.setState({ players: rspo }))
+    }, 1000)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
   }
 
   componentDidUpdate() {
-    if (this.team.counter % 2 == 0) {
-      this.team.b.push(this.state.players[this.team.counter])
-    } else {
-      this.team.a.push(this.state.players[this.team.counter])
+    //  FIXME condition stays true
+    let pl = this.state.players.length
+    if (pl > 1) {
+      if (pl % 2 == 0) {
+        this.team.a.push(Object.values(this.state.players[pl - 1]))
+      } else {
+        this.team.b.push(Object.values(this.state.players[pl - 1]))
+      }
     }
-    console.log('Lobby update: ', this.state.players)
   }
 
   render() {
@@ -68,8 +78,8 @@ class Lobby extends React.Component {
       <div id="hostScreen">
         <h1 id="roomNumber">Room #{this.props.roomNumber}</h1>
         <Judge player={Object.values(this.state.players[0])} />
-        <Team name={'A'} players={Object.values(this.team.a)} />
-        <Team name={'B'} players={Object.values(this.team.b)} />
+        <Team name={'A'} players={this.team.a} />
+        <Team name={'B'} players={this.team.b} />
         <button>Ready</button>
       </div>
     )

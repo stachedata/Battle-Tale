@@ -1,10 +1,6 @@
 import React from 'react'
 
 class Judge extends React.Component {
-  componentDidUpdate() {
-    console.log('Judge:', this.props.player)
-  }
-
   render() {
     return (
       <div id="judge" className="teams">
@@ -16,12 +12,12 @@ class Judge extends React.Component {
 }
 
 class Team extends React.Component {
-  componentDidMount() {
-    console.log('Team mount: ', this.props.players)
-  }
-  componentDidUpdate() {
-    console.log('Team update: ', this.props.players)
-  }
+  // componentDidMount() {
+  //   console.log('Team mount: ', this.props.players)
+  // }
+  // componentDidUpdate() {
+  //   console.log('Team update: ', this.props.players)
+  // }
 
   render() {
     return (
@@ -41,7 +37,7 @@ class Lobby extends React.Component {
     }
 
     this.team = {
-      counter: 1,
+      playersCopy: [],
       a: [],
       b: [],
     }
@@ -54,7 +50,7 @@ class Lobby extends React.Component {
     })
     this.interval = setInterval(() => {
       this.props.room.emit('users', rspo => this.setState({ players: rspo }))
-    }, 1000)
+    }, 100)
   }
 
   componentWillUnmount() {
@@ -62,14 +58,23 @@ class Lobby extends React.Component {
   }
 
   componentDidUpdate() {
-    //  FIXME condition stays true
-    let pl = this.state.players.length
-    if (pl > 1) {
-      if (pl % 2 == 0) {
-        this.team.a.push(Object.values(this.state.players[pl - 1]))
-      } else {
-        this.team.b.push(Object.values(this.state.players[pl - 1]))
+    if (
+      this.state.players.length > this.team.playersCopy.length &&
+      this.state.players.length != 1
+    ) {
+      for (let i = 1; i < this.state.players.length; i++) {
+        if (
+          JSON.stringify(this.state.players[i]) !==
+          JSON.stringify(this.team.playersCopy[i])
+        ) {
+          if (i % 2 == 0) {
+            this.team.b.push(Object.values(this.state.players[i]))
+          } else {
+            this.team.a.push(Object.values(this.state.players[i]))
+          }
+        }
       }
+      this.team.playersCopy = [...this.state.players]
     }
   }
 

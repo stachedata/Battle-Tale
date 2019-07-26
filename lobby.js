@@ -23,21 +23,13 @@ class Judge extends React.Component {
 
 class Team extends React.Component {
   render() {
-    console.log('team:', this.props.new)
-    if (this.props.new === true) {
-      return (
-        <div id="team" className="teams">
-          <p className="teamTitle">Team {this.props.name}</p>
-          <Player name={this.props.players} />
-        </div>
-      )
-    } else {
-      return (
-        <div id="team" className="teams">
-          <p className="teamTitle">Team {this.props.name}</p>
-        </div>
-      )
-    }
+    return (
+      <div id="team" className="teams">
+        <p className="teamTitle">Team {this.props.name}</p>
+        {this.props.new === true &&
+          this.props.players.map((p, i) => <Player key={i} name={p} />)}
+      </div>
+    )
   }
 }
 
@@ -45,7 +37,7 @@ class Lobby extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      players: [''],
+      players: ['']
     }
 
     this.team = {
@@ -53,7 +45,7 @@ class Lobby extends React.Component {
       a: [],
       b: [],
       newA: false,
-      newB: false,
+      newB: false
     }
   }
 
@@ -92,8 +84,6 @@ class Lobby extends React.Component {
       }
       this.team.playersCopy = [...this.state.players]
     }
-
-    console.log(this.team.newA)
   }
 
   render() {

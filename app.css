@@ -16,6 +16,8 @@ p {
   font-family: Sarabun;
   font-style: normal;
   font-weight: normal;
+  text-align: center;
+  width: 100%;
 }
 
 #buttonsContainer {
@@ -62,15 +64,37 @@ form input[type='number'] {
   background: rgba(196, 196, 196, 0.3);
   border-radius: 5px;
   width: 320px;
+
+  display: flex;
+  flex-direction: column;
+  align-self: center;
 }
 
 .teamTitle {
-  margin: 0.5px 0 3px 0;
+  margin: 0.5px 0 7px 0;
   font-size: 24px;
   line-height: 31px;
   text-align: center;
   letter-spacing: 0.05em;
   color: #696969;
+}
+#player {
+  margin: 0 auto;
+  width: 250px;
+  height: 37px;
+
+  background: #fdfdfd;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+
+  font-size: 20px;
+  line-height: 26px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.05em;
+
+  color: #272727;
 }
 
 #judge {

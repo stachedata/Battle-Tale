@@ -1,31 +1,43 @@
 import React from 'react'
 
+class Player extends React.Component {
+  render() {
+    return (
+      <div id="player">
+        <p>{this.props.name}</p>
+      </div>
+    )
+  }
+}
+
 class Judge extends React.Component {
   render() {
     return (
       <div id="judge" className="teams">
         <p className="teamTitle">Judge</p>
-        <p>{this.props.player}</p>
+        <Player name={this.props.player} />
       </div>
     )
   }
 }
 
 class Team extends React.Component {
-  // componentDidMount() {
-  //   console.log('Team mount: ', this.props.players)
-  // }
-  // componentDidUpdate() {
-  //   console.log('Team update: ', this.props.players)
-  // }
-
   render() {
-    return (
-      <div id="team" className="teams">
-        <p className="teamTitle">Team {this.props.name}</p>
-        <p>{this.props.players}</p>
-      </div>
-    )
+    console.log('team:', this.props.new)
+    if (this.props.new === true) {
+      return (
+        <div id="team" className="teams">
+          <p className="teamTitle">Team {this.props.name}</p>
+          <Player name={this.props.players} />
+        </div>
+      )
+    } else {
+      return (
+        <div id="team" className="teams">
+          <p className="teamTitle">Team {this.props.name}</p>
+        </div>
+      )
+    }
   }
 }
 
@@ -40,6 +52,8 @@ class Lobby extends React.Component {
       playersCopy: [],
       a: [],
       b: [],
+      newA: false,
+      newB: false,
     }
   }
 
@@ -68,14 +82,18 @@ class Lobby extends React.Component {
           JSON.stringify(this.team.playersCopy[i])
         ) {
           if (i % 2 == 0) {
+            this.team.newB = true
             this.team.b.push(Object.values(this.state.players[i]))
           } else {
+            this.team.newA = true
             this.team.a.push(Object.values(this.state.players[i]))
           }
         }
       }
       this.team.playersCopy = [...this.state.players]
     }
+
+    console.log(this.team.newA)
   }
 
   render() {
@@ -83,8 +101,8 @@ class Lobby extends React.Component {
       <div id="hostScreen">
         <h1 id="roomNumber">Room #{this.props.roomNumber}</h1>
         <Judge player={Object.values(this.state.players[0])} />
-        <Team name={'A'} players={this.team.a} />
-        <Team name={'B'} players={this.team.b} />
+        <Team name={'A'} players={this.team.a} new={this.team.newA} />
+        <Team name={'B'} players={this.team.b} new={this.team.newB} />
         <button>Ready</button>
       </div>
     )
